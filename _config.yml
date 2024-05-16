@@ -1,6 +1,6 @@
 title: OvrK12
 baseurl: ""
-url: https://ovrk12.github.io/ # change this URL, this is needed for generating right sitemap
+url: "https://OvrK12.github.io/"
 
 permalink: "/blog/:title/"
 
