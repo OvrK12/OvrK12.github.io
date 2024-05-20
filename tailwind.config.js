@@ -6,6 +6,8 @@ module.exports = {
   theme: {
     extend: {
       colors: {
+        background: "#0f172a",
+        primaryText: "#E2E8F0",
         gray: colors.slate,
         primary: colors.rose,
         secondary: colors.indigo,
@@ -13,7 +15,7 @@ module.exports = {
         danger: colors.red,
       },
       fontFamily: {
-        sans: ['Work Sans','Inter var', ...defaultTheme.fontFamily.sans]
+        sans: ['Inter var', ...defaultTheme.fontFamily.sans]
       }
     }
   },
