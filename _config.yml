@@ -1,14 +1,16 @@
 title: OvrK12
 baseurl: ""
 url: "https://OvrK12.github.io/"
-
+author_name: "Kraus, Oliver"
 permalink: "/blog/:title/"
 
 plugins:
+  - jekyll-postcss-v2
   - jekyll-feed
   - jekyll-soopr-seo-tag
   - jekyll-sitemap
   - jekyll-minifier
+  - jekyll-scholar
 
 css_dir: "assets/css" # defaults to "css"
 
@@ -25,6 +27,15 @@ collections:
 jekyll-minifier:
   uglifier_args:
     harmony: true
+scholar:
+  bibliography: papers.bib
+  bibliography_template: 
+    - bib
+    - highlight
+  style: ieee
+  sort_by: year,month
+  order: descending
+  highlight: "Kraus, Oliver" 
 
 exclude:
   - Gemfile

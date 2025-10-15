@@ -1,0 +1,117 @@
+<header id="header" class="
+  sticky top-0 z-50 
+  overflow-hidden
+  
+  bg-background/95 dark:bg-dark_background
+  
+  transition-all duration-300 ease-in-out
+
+  max-h-16 
+  
+  [&.menu-open]:max-h-96
+
+  [&.glass-effect]:bg-background/50   dark:[&.glass-effect]:bg-dark_background/50
+  [&.glass-effect]:backdrop-blur-lg 
+  [&.glass-effect]:shadow-lg 
+  [&.glass-effect]:shadow-black/10    dark:[&.glass-effect]:shadow-black/30
+">
+  <div class="max-w-screen-lg mx-auto px-4">
+    <div class="flex items-center justify-between h-16">
+      <a href="#" class="text-xl text-gray-800 dark:text-gray-100 flex"> 
+        <span class="font-bold">Oliver</span>&nbsp;Kraus
+      </a>
+      
+      <div class="flex items-center space-x-6">
+        <nav class="hidden lg:flex space-x-4 text-gray-600 dark:text-gray-300">
+          <a href="#" class="transition-colors">About</a>
+          <a href="#publications" class="transition-colors">Publications</a>
+        </nav>
+        
+        <button id="theme-toggle" 
+                class="relative w-[60px] h-[30px] bg-gray-400/30 dark:bg-blue-500/40 rounded-full cursor-pointer transition-all duration-300 border border-gray-400/20 hover:bg-gray-400/40 dark:hover:bg-blue-500/50" 
+                aria-label="Toggle dark mode">
+          <div class="absolute top-[2px] left-[2px] w-6 h-6 bg-white dark:bg-gray-800 rounded-full transition-all duration-300 shadow-md flex items-center justify-center text-xs dark:translate-x-8 dark:text-yellow-400">
+            <span class="sun dark:hidden">☀️</span>
+            <span class="moon hidden dark:block">🌙</span>
+          </div>
+        </button>
+
+        <button id="mobile-menu-button" class="lg:hidden p-2 text-gray-600 dark:text-gray-300" aria-label="Open main menu">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div id="mobile-menu" class="lg:hidden">
+      <nav class="flex flex-col space-y-2 py-4 text-gray-600 dark:text-gray-300 border-t border-gray-500/20">
+        <a href="#" class="px-2 py-1">About</a>
+        <a href="#publications" class="px-2 py-1">Publications</a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<script>
+  // --- Element Selectors ---
+  const html = document.documentElement;
+  const header = document.getElementById('header');
+  const themeToggle = document.getElementById('theme-toggle');
+  // New selectors for the mobile menu
+  const mobileMenuButton = document.getElementById('mobile-menu-button');
+  const mobileMenu = document.getElementById('mobile-menu');
+
+  // --- Theme Management ---
+  function setTheme(theme) {
+    // Make theme change instant by temporarily disabling header transitions
+    header.classList.add('transition-none');
+    
+    localStorage.setItem('theme', theme);
+    
+    if (theme === 'dark') {
+      html.classList.add('dark');
+    } else {
+      html.classList.remove('dark');
+    }
+    
+    // Re-enable transitions after the theme has been applied
+    setTimeout(() => {
+      header.classList.remove('transition-none');
+    });
+  }
+
+  // --- Header Glass Effect on Scroll ---
+  function updateHeaderOnScroll() {
+    // Simply toggle a single class. The CSS handles all styling.
+    header.classList.toggle('glass-effect', window.scrollY > 10);
+  }
+
+  // --- Event Listeners ---
+  themeToggle.addEventListener('click', () => {
+    const isDark = html.classList.contains('dark');
+    setTheme(isDark ? 'light' : 'dark');
+  });
+
+
+  mobileMenuButton.addEventListener('click', () => {
+    // Toggle the 'menu-open' class on the HEADER element
+    header.classList.toggle('menu-open');
+  });
+  // Use { passive: true } for better scroll performance
+  window.addEventListener('scroll', updateHeaderOnScroll, { passive: true });
+
+  // --- Initial Setup ---
+  function initialize() {
+    const savedTheme = localStorage.getItem('theme') || 
+      (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    
+    // Set the initial theme without waiting for transitions
+    setTheme(savedTheme);
+    
+    // Set initial header state on page load
+    updateHeaderOnScroll();
+  }
+
+  initialize();
+</script>

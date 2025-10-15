@@ -3,10 +3,15 @@
 
 {%- include head.html -%}
 
-<body class='h-full w-full'>
+<body class="flex flex-col min-h-screen bg-background dark:bg-dark_background">
 
-  {{ content }}
+  {% include header.html %}
+
+  <main class="flex-grow">
+    {{ content }}
+  </main>
+
+  {% include footer.html %}
 
 </body>
-
 </html>

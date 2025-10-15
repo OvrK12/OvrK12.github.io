@@ -1,0 +1,55 @@
+<div class="flex items-start mb-6 leading-normal">
+  <div class="flex-shrink-0 w-24 mr-6 text-center">
+    {% if entry.status %}
+      {% assign status_class = "bg-blue-600" %}
+      {% if entry.status == "preprint" %}
+        {% assign status_class = "bg-purple-600" %}
+      {% elsif entry.status == "journal" %}
+        {% assign status_class = "bg-blue-600" %}
+      {% endif %}
+
+      <span class="inline-block px-3 py-1 text-xs font-semibold text-white uppercase {{ status_class }} rounded-full">
+        {{ entry.status }}
+      </span>
+    {% endif %}
+  </div>
+
+  <div class="flex-grow">
+    <h3 class="mb-1 text-lg font-bold">
+      <a href="{{ entry.url | default: entry.details_url }}" target="_blank" rel="noopener" class="no-underline">
+        {{ entry.title }}
+      </a>
+    </h3>
+
+    <div class="text-gray-600 dark:text-gray-400 not-italic text-sm">
+      {% comment %} Split the single author string into a list, using "and" as the separator {% endcomment %}
+      {%- assign authors = entry.author | split: " and " -%}
+
+      {% for author_raw in authors %}
+        {%- assign author = author_raw | strip_newlines | strip -%}
+
+        {%- if author == site.author_name -%}
+          <span class="underline font-bold">{{ author }}</span>
+        {%- else -%}
+          {{ author }}
+        {%- endif -%}
+        {%- unless forloop.last -%}, {% endunless %}
+      {% endfor %}
+    </div>
+
+    <div class="text-sm text-gray-600 dark:text-gray-400">{{ entry.year }}</div>
+
+    <div class="mt-1">
+      {% if entry.abs_url %}
+        <a href="{{ entry.abs_url }}" class="inline-block px-3 py-0.5 mr-2 text-sm text-gray-800 no-underline transition-colors duration-200 border border-gray-300 rounded hover:bg-gray-100 hover:border-gray-400 dark:text-gray-200 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-500" target="_blank" rel="noopener">
+          ABS
+        </a>
+      {% endif %}
+      {% if entry.pdf_url %}
+        <a href="{{ entry.pdf_url }}" class="inline-block px-3 py-0.5 mr-2 text-sm text-gray-800 no-underline transition-colors duration-200 border border-gray-300 rounded hover:bg-gray-100 hover:border-gray-400 dark:text-gray-200 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-500" target="_blank" rel="noopener">
+          PDF
+        </a>
+      {% endif %}
+    </div>
+  </div>
+</div>
